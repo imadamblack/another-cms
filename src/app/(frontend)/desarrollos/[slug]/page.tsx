@@ -110,6 +110,39 @@ async function getDevelopment(slug: string) {
   }
 }
 
+const Blockbuster = ({
+  title,
+  img,
+  development,
+}: {
+  title: string
+  img: string
+  development: string
+}) => {
+  return (
+    <>
+      <div className="sticky top-[4rem] md:top-[6rem] w-full flex items-end justify-start bg-brand-1 gap-4 px-8 py-2 z-10">
+        <span className="-ft-2 inline-flex items-end !leading-[1] mono uppercase text-neutral-200">
+          {development}
+        </span>
+        <span className="ft-1 inline-flex items-end !leading-[1] text-neutral-200 font-bold">
+          {title}
+        </span>
+      </div>
+      <div className="relative flex flex-col items-center justify-center w-full aspect-[3/2] md:aspect-[3/1] bg-brand-1">
+        <div className="absolute flex inset-0 overflow-hidden">
+          {img && <Image src={img} alt={development} fill sizes="100vw" className="object-cover" />}
+          {/*<div className="absolute flex inset-0 bg-neutral-800/60" />*/}
+        </div>
+        <div className="z-10 text-center">
+          <p className="-ft-1 mono uppercase text-neutral-200">{development}</p>
+          <h2 className="ft-10 text-neutral-200 font-black">{title}</h2>
+        </div>
+      </div>
+    </>
+  )
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const result = await getDevelopment(slug)
@@ -193,73 +226,49 @@ export default async function DevelopmentPage({ params }: PageProps) {
       </section>
 
       {/* UBICACION */}
-      <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
-        <div className="absolute flex inset-0 overflow-hidden">
-          {getGalleryImage(1) && (
-            <Image
-              src={getGalleryImage(1) as string}
-              alt={development.name}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
-          <div className="absolute flex inset-0 bg-neutral-800/60" />
-        </div>
-        <div className="z-10 text-center">
-          <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
-          <h2 className="ft-10 text-neutral-200 font-black">Ubicación</h2>
-        </div>
-      </section>
+      <section className="relative">
+        <Blockbuster
+          title="Ubicación"
+          img={getGalleryImage(1) as string}
+          development={development.name}
+        />
 
-      <section className="px-8 py-20 grid md:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
-          <h3 className="ft-6 font-bold">{development.location?.neighborhood}</h3>
-          <p className="mono uppercase tracking-wider font-light text-neutral-500">
-            {development.location?.address}
-            <br />
-            {development.location?.city} — {development.location?.state}
-            <br />
-            {development.location?.postalCode}
-          </p>
-        </div>
+        <div className="w-full px-8 py-20 grid md:grid-cols-2 gap-8">
+          <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
+            <h3 className="ft-6 font-bold">{development.location?.neighborhood}</h3>
+            <p className="mono uppercase tracking-wider font-light text-neutral-500">
+              {development.location?.address}
+              <br />
+              {development.location?.city} — {development.location?.state}
+              <br />
+              {development.location?.postalCode}
+            </p>
+          </div>
 
-        <div className="relative w-full aspect-square lg:aspect-video">
-          {getMediaUrl(development.location?.map) && (
-            <Image
-              src={getMediaUrl(development.location?.map) as string}
-              alt={development.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
-          )}
+          <div className="relative w-full aspect-square lg:aspect-video">
+            {getMediaUrl(development.location?.map) && (
+              <Image
+                src={getMediaUrl(development.location?.map) as string}
+                alt={development.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            )}
+          </div>
         </div>
       </section>
 
       {/* AMENIDADES */}
       {amenities.length && (
-        <>
-          <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
-            <div className="absolute flex inset-0 overflow-hidden">
-              {getGalleryImage(2) && (
-                <Image
-                  src={getGalleryImage(2) as string}
-                  alt={development.name}
-                  fill
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              )}
-              <div className="absolute flex inset-0 bg-neutral-800/60" />
-            </div>
-            <div className="z-10 text-center">
-              <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
-              <h2 className="ft-10 text-neutral-200 font-black">Amenidades</h2>
-            </div>
-          </section>
+        <section>
+          <Blockbuster
+            title="Amenidades"
+            img={getGalleryImage(2) as string}
+            development={development.name}
+          />
 
-          <section className="px-8 py-20 grid md:grid-cols-2 gap-8">
+          <div className="w-full px-8 py-20 grid md:grid-cols-2 gap-8">
             {amenities.map((item) => {
               const amenity = item.amenity as Amenity | number
 
@@ -290,196 +299,164 @@ export default async function DevelopmentPage({ params }: PageProps) {
                 </div>
               )
             })}
-          </section>
-        </>
+          </div>
+        </section>
       )}
 
       {/* UNIDADES */}
-      <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
-        <div className="absolute flex inset-0 overflow-hidden">
-          {getGalleryImage(3) && (
-            <Image
-              src={getGalleryImage(3) as string}
-              alt={development.name}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
-          <div className="absolute flex inset-0 bg-neutral-800/60" />
-        </div>
-        <div className="z-10 text-center">
-          <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
-          <h2 className="ft-10 text-neutral-200 font-black">Unidades</h2>
-        </div>
-      </section>
+      <section>
+        <Blockbuster
+          title="Unidades"
+          img={getGalleryImage(3) as string}
+          development={development.name}
+        />
 
-      {units.length ? (
-        <section className="px-8 py-20 grid md:grid-cols-2 gap-8">
-          {units.map((unit) => {
-            const image = getMediaUrl(unit.floorPlan)
-            const soldOut = unit.status === 'soldOut'
-            const totalArea = formatArea(unit.attributes?.totalArea)
-            const bedrooms = formatRooms(unit.attributes?.bedrooms)
-            const bathrooms = formatRooms(unit.attributes?.bathrooms, 'baño', 'baños')
-            const parking = formatRooms(
-              unit.attributes?.parkingSpaces,
-              'estacionamiento',
-              'estacionamientos',
-            )
+        {units.length ? (
+          <div className="w-full px-8 py-20 grid md:grid-cols-2 gap-8">
+            {units.map((unit) => {
+              const image = getMediaUrl(unit.floorPlan)
+              const soldOut = unit.status === 'soldOut'
+              const totalArea = formatArea(unit.attributes?.totalArea)
+              const bedrooms = formatRooms(unit.attributes?.bedrooms)
+              const bathrooms = formatRooms(unit.attributes?.bathrooms, 'baño', 'baños')
+              const parking = formatRooms(
+                unit.attributes?.parkingSpaces,
+                'estacionamiento',
+                'estacionamientos',
+              )
 
-            return (
-              <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={unit.id}>
-                <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
-                  {soldOut && (
-                    <div className="absolute right-0 bottom-0 ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4 z-10">
-                      SOLD OUT
+              return (
+                <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={unit.id}>
+                  <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
+                    {soldOut && (
+                      <div className="absolute right-0 bottom-0 ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4 z-10">
+                        SOLD OUT
+                      </div>
+                    )}
+                    <h3 className="ft-6 font-bold">{unit.name}</h3>
+                    <p>{unit.pricing?.priceLabel}</p>
+                    <div className="-ft-2 mono uppercase text-neutral-600">
+                      {totalArea && <span>{totalArea} | </span>}
+                      {bedrooms && <span>{bedrooms} | </span>}
+                      {bathrooms && <span>{bathrooms} | </span>}
+                      {parking && <span>{parking} | </span>}
+                      {unit.attributes?.hasTerrace && <span>Terraza</span>}
                     </div>
-                  )}
-                  <h3 className="ft-6 font-bold">{unit.name}</h3>
-                  <p>{unit.pricing?.priceLabel}</p>
-                  <div className="-ft-2 mono uppercase text-neutral-600">
-                    {totalArea && <span>{totalArea} | </span>}
-                    {bedrooms && <span>{bedrooms} | </span>}
-                    {bathrooms && <span>{bathrooms} | </span>}
-                    {parking && <span>{parking} | </span>}
-                    {unit.attributes?.hasTerrace && <span>Terraza</span>}
+                  </div>
+
+                  <div className="relative col-span-2 p-4 w-full aspect-square md:aspect-[4/3] overflow-hidden">
+                    {image && (
+                      <Image
+                        alt={unit.name}
+                        src={image}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-center object-contain"
+                      />
+                    )}
                   </div>
                 </div>
-
-                <div className="relative col-span-2 p-4 w-full aspect-square md:aspect-[4/3] overflow-hidden">
-                  {image && (
-                    <Image
-                      alt={unit.name}
-                      src={image}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 66vw"
-                      className="object-center object-contain"
-                    />
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </section>
-      ) : (
-        <p className="ft-1">Unidades por definir.</p>
-      )}
+              )
+            })}
+          </div>
+        ) : (
+          <p className="ft-1">Unidades por definir.</p>
+        )}
+      </section>
 
       {/* PLAN PAGOS */}
-      <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
-        <div className="absolute flex inset-0 overflow-hidden">
-          {getGalleryImage(4) && (
-            <Image
-              src={getGalleryImage(4) as string}
-              alt={development.name}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
-          <div className="absolute flex inset-0 bg-neutral-800/60" />
-        </div>
-        <div className="z-10 text-center">
-          <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
-          <h2 className="ft-10 text-neutral-200 font-black">Planes de Pago</h2>
-        </div>
+      <section>
+        <Blockbuster
+          title="Planes de pago"
+          img={getGalleryImage(4) as string}
+          development={development.name}
+        />
+
+        {paymentPlans.length ? (
+          <div className="w-full px-8 py-20 grid md:grid-cols-2 gap-8">
+            {paymentPlans.map((pm) => {
+              const chart = getMediaUrl(pm.chart)
+              const discount = pm.discountPercent
+
+              return (
+                <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={pm.id}>
+                  <div className="flex flex-col py-8 justify-end border-y border-neutral-800">
+                    <h3 className="ft-6 font-bold">{pm.name}</h3>
+                    {discount !== 0 && (
+                      <div className="ft-0 text-brand-2 font-bold">Descuento del {discount}%</div>
+                    )}
+                  </div>
+
+                  <div className="relative col-span-2 w-full aspect-square md:aspect-[4/3] overflow-hidden">
+                    {chart && (
+                      <Image
+                        alt={pm.name}
+                        src={chart}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-center object-cover"
+                      />
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          <p className="ft-1">Unidades por definir.</p>
+        )}
       </section>
-
-      {paymentPlans.length ? (
-        <section className="px-8 py-20 grid md:grid-cols-2 gap-8">
-          {paymentPlans.map((pm) => {
-            const chart = getMediaUrl(pm.chart)
-            const discount = pm.discountPercent
-
-            return (
-              <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={pm.id}>
-                <div className="flex flex-col py-8 justify-end border-y border-neutral-800">
-                  <h3 className="ft-6 font-bold">{pm.name}</h3>
-                  {discount !== 0 && (
-                    <div className="ft-0 text-brand-2 font-bold">Descuento del {discount}%</div>
-                  )}
-                </div>
-
-                <div className="relative col-span-2 w-full aspect-square md:aspect-[4/3] overflow-hidden">
-                  {chart && (
-                    <Image
-                      alt={pm.name}
-                      src={chart}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 66vw"
-                      className="object-center object-cover"
-                    />
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </section>
-      ) : (
-        <p className="ft-1">Unidades por definir.</p>
-      )}
 
       {/* SNAPSHOT */}
-      <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
-        <div className="absolute flex inset-0 overflow-hidden">
-          {getGalleryImage(5) && (
-            <Image
-              src={getGalleryImage(5) as string}
-              alt={development.name}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
-          <div className="absolute flex inset-0 bg-neutral-800/60" />
-        </div>
-        <div className="z-10 text-center">
-          <p className="-ft-2 mono uppercase text-neutral-200">{development.name}</p>
-          <h2 className="ft-10 text-neutral-200 font-black">Snapshot de Inversión</h2>
-        </div>
-      </section>
-      <section className="px-8 py-20">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
-            <p className="-ft-2 mono uppercase text-brand-4">
-              Precio m<sup>2</sup>
-            </p>
-            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
-              {formatCurrency(development.investmentSnapshot?.pricePerSqm)}
-            </p>
-            <p className="-ft-2 text-brand-4">Hoy en preventa</p>
+      <section>
+        <Blockbuster
+          title="Investment Snapshot"
+          img={getGalleryImage(5) as string}
+          development={development.name}
+        />
+
+        <div className="w-full px-8 py-20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+              <p className="-ft-2 mono uppercase text-brand-4">
+                Precio m<sup>2</sup>
+              </p>
+              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+                {formatCurrency(development.investmentSnapshot?.pricePerSqm)}
+              </p>
+              <p className="-ft-2 text-brand-4">Hoy en preventa</p>
+            </div>
+            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+              <p className="-ft-2 mono uppercase text-brand-4">
+                Precio m<sup>2</sup> Mercado
+              </p>
+              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+                {formatCurrency(development.investmentSnapshot?.marketPricePerSqm)}
+              </p>
+              <p className="-ft-2 text-brand-4">
+                Punto de comparación en {development.location?.neighborhood}
+              </p>
+            </div>
+            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+              <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
+              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+                <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
+                {development.investmentSnapshot?.spread}%
+              </p>
+              <p className="-ft-2 text-brand-4">El descuento vs el mercado</p>
+            </div>
+            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+              <p className="-ft-2 mono uppercase text-brand-4">Cap Rate</p>
+              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+                {development.investmentSnapshot?.capRateMid}%
+              </p>
+              <p className="-ft-2 text-brand-4">Cuánto generas al año en rentas cortas.</p>
+            </div>
           </div>
-          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
-            <p className="-ft-2 mono uppercase text-brand-4">
-              Precio m<sup>2</sup> Mercado
-            </p>
-            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
-              {formatCurrency(development.investmentSnapshot?.marketPricePerSqm)}
-            </p>
-            <p className="-ft-2 text-brand-4">
-              Punto de comparación en {development.location?.neighborhood}
-            </p>
+          <div className="-ft-3 mt-8">
+            Las proyecciones de mercado se basan en datos históricos y estimaciones de fuentes
+            externas y no representan una garantía.
           </div>
-          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
-            <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
-            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
-              <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
-              {development.investmentSnapshot?.spread}%
-            </p>
-            <p className="-ft-2 text-brand-4">El descuento vs el mercado</p>
-          </div>
-          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
-            <p className="-ft-2 mono uppercase text-brand-4">Cap Rate</p>
-            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
-              {development.investmentSnapshot?.capRateMid}%
-            </p>
-            <p className="-ft-2 text-brand-4">Cuánto generas al año en rentas cortas.</p>
-          </div>
-        </div>
-        <div className="-ft-3 mt-8">
-          Las proyecciones de mercado se basan en datos históricos y estimaciones de fuentes
-          externas y no representan una garantía.
         </div>
       </section>
 
