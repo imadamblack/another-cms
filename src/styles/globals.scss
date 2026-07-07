@@ -53,7 +53,7 @@ button, .button {
   font-size: 1.2rem;
   @apply flex justify-center
   w-max px-8 py-4
-  uppercase font-semibold underline underline-offset-[.5rem] tracking-[.2rem]
+  uppercase font-semibold underline-offset-[.5rem] tracking-[.2rem]
   bg-[#edeae3] text-black
   hover:bg-black hover:text-white;
   &-secondary {

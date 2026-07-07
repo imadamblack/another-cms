@@ -38,6 +38,21 @@ const formatRooms = (value?: number | null, singular = 'recámara', plural = 're
   return `${value} ${value === 1 ? singular : plural}`
 }
 
+function formatCurrency(value: string | number | null | undefined): string {
+  const sanitizedValue = typeof value === 'string' ? value.replace(/[^0-9.-]/g, '') : value
+
+  const number = Number(sanitizedValue)
+
+  if (!Number.isFinite(number)) return '$0.00'
+
+  return number.toLocaleString('es-MX', {
+    style: 'currency',
+    currency: 'MXN',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  })
+}
+
 async function getDevelopment(slug: string) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
@@ -379,12 +394,10 @@ export default async function DevelopmentPage({ params }: PageProps) {
 
             return (
               <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={pm.id}>
-                <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
+                <div className="flex flex-col py-8 justify-end border-y border-neutral-800">
                   <h3 className="ft-6 font-bold">{pm.name}</h3>
                   {discount !== 0 && (
-                    <div className="ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4">
-                      Descuento del {discount}%
-                    </div>
+                    <div className="ft-0 text-brand-2 font-bold">Descuento del {discount}%</div>
                   )}
                 </div>
 
@@ -406,6 +419,75 @@ export default async function DevelopmentPage({ params }: PageProps) {
       ) : (
         <p className="ft-1">Unidades por definir.</p>
       )}
+
+      {/* SNAPSHOT */}
+      <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
+        <div className="absolute flex inset-0 overflow-hidden">
+          {getGalleryImage(5) && (
+            <Image
+              src={getGalleryImage(5) as string}
+              alt={development.name}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
+          <div className="absolute flex inset-0 bg-neutral-800/60" />
+        </div>
+        <div className="z-10 text-center">
+          <p className="-ft-2 mono uppercase text-neutral-200">{development.name}</p>
+          <h2 className="ft-10 text-neutral-200 font-black">Snapshot de Inversión</h2>
+        </div>
+      </section>
+      <section className="px-8 py-20">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <p className="-ft-2 mono uppercase text-brand-4">
+              Precio m<sup>2</sup>
+            </p>
+            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              {formatCurrency(development.investmentSnapshot?.pricePerSqm)}
+            </p>
+            <p className="-ft-2 text-brand-4">Hoy en preventa</p>
+          </div>
+          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <p className="-ft-2 mono uppercase text-brand-4">
+              Precio m<sup>2</sup> Mercado
+            </p>
+            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              {formatCurrency(development.investmentSnapshot?.marketPricePerSqm)}
+            </p>
+            <p className="-ft-2 text-brand-4">
+              Punto de comparación en {development.location?.neighborhood}
+            </p>
+          </div>
+          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
+            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
+              {development.investmentSnapshot?.spread}%
+            </p>
+            <p className="-ft-2 text-brand-4">El descuento vs el mercado</p>
+          </div>
+          <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <p className="-ft-2 mono uppercase text-brand-4">Cap Rate</p>
+            <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              {development.investmentSnapshot?.capRateMid}%
+            </p>
+            <p className="-ft-2 text-brand-4">Cuánto generas al año en rentas cortas.</p>
+          </div>
+        </div>
+        <div className="-ft-3 mt-8">
+          Las proyecciones de mercado se basan en datos históricos y estimaciones de fuentes
+          externas y no representan una garantía.
+        </div>
+      </section>
+
+      <section className="px-8 py-4 bg-brand-4/60 backdrop-blur sticky bottom-0 z-20">
+        <a href="#contact" className="button !bg-brand-2 !text-brand-4 !w-full">
+          Habla con un asesor
+        </a>
+      </section>
 
       <section id="contact" className="w-full py-20 border-t border-brand-1">
         <div className="reading-container">

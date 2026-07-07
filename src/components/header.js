@@ -10,11 +10,16 @@ const ArrowIcon = () => (
 
 export default function Header() {
   return (
-    <header
-      className="px-10 w-full h-[6rem] flex justify-between items-center bg-neutral-100/50 backdrop-blur-md sticky top-0 z-50 shadow-md">
-      <div className="relative w-[16rem] md:w-[20rem] aspect-[4/1] flex justify-start items-center gap-7 overflow-hidden">
+    <header className="px-8 w-full h-[4rem] md:h-[6rem] flex justify-between items-center bg-neutral-100/50 backdrop-blur-md sticky top-0 z-50 shadow-md">
+      <div className="relative w-[12rem] md:w-[20rem] aspect-[4/1] flex justify-start items-center gap-7 overflow-hidden">
         <Link href="/">
-          <Image src="/logo.svg" fill alt="Another Real Estate Agency" style={{objectFit: 'contain'}}/>
+          <Image
+            src="/logo.svg"
+            fill
+            alt="Another Real Estate Agency"
+            style={{ objectFit: 'contain' }}
+            priority
+          />
         </Link>
       </div>
 
@@ -35,9 +40,9 @@ export default function Header() {
         className="text-[11px] font-medium tracking-[0.1em] uppercase text-[#1a1814] no-underline border-b border-[#1a1814] pb-[2px] flex items-center gap-1.5 hover:text-[#8a8680] hover:border-[#8a8680] transition-colors"
       >
         Agenda
-        <ArrowIcon/>
+        <ArrowIcon />
       </a>
     </header>
-  );
+  )
 
 }
