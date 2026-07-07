@@ -50,6 +50,10 @@ export default buildConfig({
       collections: {
         media: true,
       },
+      // Vercel limita a 4.5MB los uploads que pasan por el servidor. Varios
+      // archivos ya subidos pesan más que eso, así que el upload va directo
+      // del navegador a Blob.
+      clientUploads: true,
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],

@@ -68,8 +68,8 @@ const problemQuestions = [
     desc: '¿Existe un fideicomiso que proteja tu capital?',
   },
   {
-    title: '(CRÉDITO PUENTE)',
-    desc: '¿Hay crédito puente, o el proyecto depende de las preventas para poder construirse?',
+    title: '(FINANCIAMIENTO)',
+    desc: '¿Cuenta con crédito puente o capital aportado por inversionistas, o depende de las preventas?',
   },
   {
     title: '(TRAYECTORIA)',
