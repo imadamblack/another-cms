@@ -152,7 +152,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     description: development.tagline || undefined,
     openGraph: {
-      description: development.description || undefined,
+      description: development.tagline || undefined,
       images: image ? [{ url: image }] : undefined,
       title: `Another Listing: ${development.name}`,
     },
@@ -355,7 +355,12 @@ export default async function DevelopmentPage({ params }: PageProps) {
             })}
           </div>
         ) : (
-          <p className="ft-1">Unidades por definir.</p>
+          <div className="reading-container px-8 py-20 flex flex-col gap-4 justify-center items-center">
+            <p>Consulta disponibilidad y lista de precios</p>
+            <a href="#contact" className="button !bg-brand-2 !text-brand-4 !w-full">
+              Habla con un asesor
+            </a>
+          </div>
         )}
       </section>
 
@@ -398,7 +403,12 @@ export default async function DevelopmentPage({ params }: PageProps) {
             })}
           </div>
         ) : (
-          <p className="ft-1">Unidades por definir.</p>
+          <div className="reading-container px-8 py-20 flex flex-col gap-4 justify-center items-center">
+            <p>Consulta planes de pago</p>
+            <a href="#contact" className="button !bg-brand-2 !text-brand-4 !w-full">
+              Habla con un asesor
+            </a>
+          </div>
         )}
       </section>
 
@@ -434,7 +444,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
             </div>
             <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
-              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto gap-2 items-end">
                 <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
                 {development.investmentSnapshot?.spread}%
               </p>
