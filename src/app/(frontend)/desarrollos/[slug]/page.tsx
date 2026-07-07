@@ -68,11 +68,6 @@ async function getDevelopment(slug: string) {
             equals: slug,
           },
         },
-        {
-          status: {
-            equals: 'published',
-          },
-        },
       ],
     },
   })
