@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
@@ -88,5 +89,9 @@ export default async function HomePage() {
     img: getMediaUrl(d.heroImage),
   }))
 
-  return <HomeLanding proyectos={proyectos} />
+  return (
+    <Suspense fallback={null}>
+      <HomeLanding proyectos={proyectos} />
+    </Suspense>
+  )
 }

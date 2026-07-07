@@ -23,7 +23,7 @@ export default buildConfig({
     components: {
       graphics: {
         Logo: '/components/AdminLogo#AdminLogo',
-        Icon: '/components/AdminLogo#AdminLogo',
+        Icon: '/components/Favicon#Favicon',
       },
     },
     importMap: {
