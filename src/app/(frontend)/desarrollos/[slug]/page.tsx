@@ -154,9 +154,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       description: development.tagline || undefined,
       images: image ? [{ url: image }] : undefined,
-      title: `Another Listing: ${development.name}`,
+      title: `Another® Listing: ${development.name}`,
     },
-    title: `Another Listing: ${development.name}`,
+    title: `Another® Listing: ${development.name}`,
   }
 }
 
