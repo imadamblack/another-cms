@@ -124,12 +124,12 @@ const Blockbuster = ({
           {title}
         </span>
       </div>
-      <div className="relative flex flex-col items-center justify-center w-full aspect-[3/2] md:aspect-[3/1] bg-brand-1">
+      <div className="p-8 relative flex flex-col items-start justify-end w-full aspect-[3/2] md:aspect-[3/1] bg-brand-1 z-0">
         <div className="absolute flex inset-0 overflow-hidden">
           {img && <Image src={img} alt={development} fill sizes="100vw" className="object-cover" />}
-          {/*<div className="absolute flex inset-0 bg-neutral-800/60" />*/}
+          <div className="absolute flex inset-0 bg-neutral-800/40" />
         </div>
-        <div className="z-10 text-center">
+        <div className="z-10">
           <p className="-ft-1 mono uppercase text-neutral-200">{development}</p>
           <h2 className="ft-10 text-neutral-200 font-black">{title}</h2>
         </div>
@@ -195,7 +195,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
 
         <div className="flex flex-col w-full pb-8 z-20 border-b border-brand-1">
           <h1 className="uppercase ft-10">{development.name}</h1>
-          <p className="ft-3">{development.tagline}</p>
+          <p className="ft-3 mb-4">{development.tagline}</p>
           <p className="-ft-1 mono uppercase text-neutral-600">
             {development.location?.neighborhood} — {development.location?.city}
           </p>
@@ -382,14 +382,14 @@ export default async function DevelopmentPage({ params }: PageProps) {
                     )}
                   </div>
 
-                  <div className="relative col-span-2 w-full aspect-square md:aspect-[4/3] overflow-hidden">
+                  <div className="relative col-span-2 w-full aspect-square md:aspect-[4/3] overflow-hidden bg-brand-4">
                     {chart && (
                       <Image
                         alt={pm.name}
                         src={chart}
                         fill
                         sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-center object-cover"
+                        className="object-center object-contain"
                       />
                     )}
                   </div>
