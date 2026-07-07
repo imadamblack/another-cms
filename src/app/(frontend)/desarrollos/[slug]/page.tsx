@@ -195,7 +195,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
 
         <div className="flex flex-col w-full pb-8 z-20 border-b border-brand-1">
           <h1 className="uppercase ft-10">{development.name}</h1>
-          <p className="ft-3 mb-4">{development.tagline}</p>
+          <p className="ft-2 mb-4">{development.tagline}</p>
           <p className="-ft-1 mono uppercase text-neutral-600">
             {development.location?.neighborhood} — {development.location?.city}
           </p>
