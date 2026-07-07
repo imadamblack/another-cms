@@ -1,14 +1,12 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
 import type { Amenity, Development, Media, Unit } from '@/payload-types'
 
-import styles from './page.module.css'
-import Image from 'next/image'
 import OptInForm from '@/components/opt-in-form'
-import Link from 'next/link'
 
 type PageProps = {
   params: Promise<{
@@ -131,18 +129,28 @@ export default async function DevelopmentPage({ params }: PageProps) {
   const units = result.units as Unit[]
   const heroImage = getMediaUrl(development.heroImage)
   const gallery = development.gallery?.map((i) => getMediaUrl(i.image))
+  const getGalleryImage = (index: number) => gallery?.[index] || undefined
   const amenities = development.amenities || []
   const paymentPlans = development.paymentPlans || []
 
   return (
     <>
       {/* HERO */}
-      <section className="relative px-8 w-full flex flex-col items-center border-b border-brand-1">
-        <div className="my-8 flex aspect-square sm:aspect-[2/1] 2xl:aspect-[3/1] overflow-hidden border border-neutral-200">
-          <img src={heroImage} alt={development.name} className="object-cover" />
+      <section className="relative px-8 w-full flex flex-col items-center">
+        <div className="relative my-8 flex aspect-square w-full sm:aspect-[2/1] 2xl:aspect-[3/1] overflow-hidden border border-neutral-200 bg-neutral-200">
+          {heroImage && (
+            <Image
+              src={heroImage}
+              alt={development.name}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
+          )}
         </div>
 
-        <div className="flex flex-col w-full mb-8 z-20">
+        <div className="flex flex-col w-full pb-8 z-20 border-b border-brand-1">
           <h1 className="uppercase ft-10">{development.name}</h1>
           <p className="ft-3">{development.tagline}</p>
           <p className="-ft-1 mono uppercase text-neutral-600">
@@ -155,8 +163,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
       <section className="w-full py-20 relative border-b border-brand-1">
         <div className="container grid md:grid-cols-2 gap-8">
           <p className="ft-2 md:max-w-[32ch]">{development.description}</p>
-          <div className="flex w-full">
-            <img src={gallery?.[0]} alt={development.name} className="object-cover" />
+          <div className="relative w-full aspect-video">
+            {getGalleryImage(0) && (
+              <Image
+                src={getGalleryImage(0) as string}
+                alt={development.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -164,8 +180,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
       {/* UBICACION */}
       <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
         <div className="absolute flex inset-0 overflow-hidden">
+          {getGalleryImage(1) && (
+            <Image
+              src={getGalleryImage(1) as string}
+              alt={development.name}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
           <div className="absolute flex inset-0 bg-neutral-800/60" />
-          <img src={heroImage} alt={development.name} className="object-cover" />
         </div>
         <div className="z-10 text-center">
           <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
@@ -185,12 +209,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
           </p>
         </div>
 
-        <div className="w-full flex aspect-square lg:aspect-video">
-          <img
-            src={getMediaUrl(development.location?.map)}
-            alt={development.name}
-            className="object-cover"
-          />
+        <div className="relative w-full aspect-square lg:aspect-video">
+          {getMediaUrl(development.location?.map) && (
+            <Image
+              src={getMediaUrl(development.location?.map) as string}
+              alt={development.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          )}
         </div>
       </section>
 
@@ -199,8 +227,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
         <>
           <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
             <div className="absolute flex inset-0 overflow-hidden">
+              {getGalleryImage(2) && (
+                <Image
+                  src={getGalleryImage(2) as string}
+                  alt={development.name}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              )}
               <div className="absolute flex inset-0 bg-neutral-800/60" />
-              <img src={heroImage} alt={development.name} className="object-cover" />
             </div>
             <div className="z-10 text-center">
               <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
@@ -225,8 +261,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
                     {amenity.description && <p>{amenity.description}</p>}
                   </div>
 
-                  <div className="col-span-2 w-full flex aspect-square md:aspect-video">
-                    <img alt={amenity.name} src={image} className="w-full object-cover" />
+                  <div className="relative col-span-2 w-full aspect-square md:aspect-video">
+                    {image && (
+                      <Image
+                        alt={amenity.name}
+                        src={image}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                 </div>
               )
@@ -238,8 +282,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
       {/* UNIDADES */}
       <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
         <div className="absolute flex inset-0 overflow-hidden">
+          {getGalleryImage(3) && (
+            <Image
+              src={getGalleryImage(3) as string}
+              alt={development.name}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
           <div className="absolute flex inset-0 bg-neutral-800/60" />
-          <img src={heroImage} alt={development.name} className="object-cover" />
         </div>
         <div className="z-10 text-center">
           <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
@@ -265,7 +317,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
               <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={unit.id}>
                 <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
                   {soldOut && (
-                    <div className="absolute right-0 bottom-0 ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4">
+                    <div className="absolute right-0 bottom-0 ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4 z-10">
                       SOLD OUT
                     </div>
                   )}
@@ -280,8 +332,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
                   </div>
                 </div>
 
-                <div className="col-span-2 flex p-4 w-full aspect-square md:aspect-[4/3] overflow-hidden">
-                  <img alt={unit.name} src={image} className="object-center object-contain" />
+                <div className="relative col-span-2 p-4 w-full aspect-square md:aspect-[4/3] overflow-hidden">
+                  {image && (
+                    <Image
+                      alt={unit.name}
+                      src={image}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 66vw"
+                      className="object-center object-contain"
+                    />
+                  )}
                 </div>
               </div>
             )
@@ -294,8 +354,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
       {/* PLAN PAGOS */}
       <section className="relative flex flex-col items-center justify-center aspect-[3/2] md:aspect-[3/1] bg-brand-1">
         <div className="absolute flex inset-0 overflow-hidden">
+          {getGalleryImage(4) && (
+            <Image
+              src={getGalleryImage(4) as string}
+              alt={development.name}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
           <div className="absolute flex inset-0 bg-neutral-800/60" />
-          <img src={heroImage} alt={development.name} className="object-cover" />
         </div>
         <div className="z-10 text-center">
           <p className="-ft-1 mono uppercase text-neutral-200">{development.name}</p>
@@ -320,8 +388,16 @@ export default async function DevelopmentPage({ params }: PageProps) {
                   )}
                 </div>
 
-                <div className="col-span-2 flex w-full aspect-square md:aspect-[4/3] overflow-hidden">
-                  <img alt={pm.name} src={chart} className="object-center object-cover" />
+                <div className="relative col-span-2 w-full aspect-square md:aspect-[4/3] overflow-hidden">
+                  {chart && (
+                    <Image
+                      alt={pm.name}
+                      src={chart}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 66vw"
+                      className="object-center object-cover"
+                    />
+                  )}
                 </div>
               </div>
             )

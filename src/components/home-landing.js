@@ -249,7 +249,7 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
 
         {/* Hero image */}
         <div className="delay-1 relative w-full overflow-hidden" style={{height: 'clamp(280px, 50vw, 580px)'}}>
-          <Image src="/images/home/hero.jpg" alt="Interior" fill style={{objectFit: 'cover'}} priority/>
+          <Image src="/images/home/hero.jpg" alt="Interior" fill sizes="100vw" style={{objectFit: 'cover'}} priority/>
           <a
             href="#proyectos"
             onClick={() => setLastClick('hero')}
@@ -434,7 +434,13 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
             const card = (
               <>
                 <div className="relative w-full aspect-video">
-                  <Image src={p.img || FALLBACK_PROJECT_IMAGE} fill alt={p.name} style={{objectFit: 'cover'}}/>
+                  <Image
+                    src={p.img || FALLBACK_PROJECT_IMAGE}
+                    fill
+                    alt={p.name}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{objectFit: 'cover'}}
+                  />
                   {p.badge &&
                     <div
                       className="absolute top-8 right-8 bg-brand-2 px-6 py-1 ft-0 font-bold text-brand-4">{p.badge}</div>
@@ -498,16 +504,16 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
         </div>
         <div className="container grid grid-cols-2 lg:grid-cols-4 gap-40 py-20">
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/lopx.png" fill alt="Lopx" style={{objectFit: 'contain'}}/>
+            <Image src="/images/home/logos/lopx.png" fill alt="Lopx" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/dala.png" fill alt="Dala" style={{objectFit: 'contain'}}/>
+            <Image src="/images/home/logos/dala.png" fill alt="Dala" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/dezka.svg" fill alt="Dezka" style={{objectFit: 'contain'}}/>
+            <Image src="/images/home/logos/dezka.svg" fill alt="Dezka" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/ccu.png" fill alt="CompraCasasUSA" style={{objectFit: 'contain'}}/>
+            <Image src="/images/home/logos/ccu.png" fill alt="CompraCasasUSA" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
           </div>
         </div>
       </section>

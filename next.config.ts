@@ -26,6 +26,16 @@ const nextConfig: NextConfig = {
         pathname: '/images/**',
       },
     ],
+    // Media en producción vive en Vercel Blob (media.url apunta ahí, no a
+    // /api/media/file/**). Sin este pattern, next/image rechaza optimizar
+    // esas URLs y sirve el archivo original sin resize/webp/responsive
+    // srcset, lo que explica buena parte de la carga lenta.
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
