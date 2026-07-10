@@ -23,6 +23,18 @@ const getMediaUrl = (media?: number | Media | null) => {
   return media.url || undefined
 }
 
+const getFocalPosition = (media?: number | Media | null) => {
+  if (!media || typeof media === 'number') {
+    return undefined
+  }
+
+  if (media.focalX == null || media.focalY == null) {
+    return undefined
+  }
+
+  return `${media.focalX}% ${media.focalY}%`
+}
+
 function formatCurrency(value: string | number | null | undefined): string {
   const sanitizedValue = typeof value === 'string' ? value.replace(/[^0-9.-]/g, '') : value
 
@@ -161,6 +173,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
     return priceA - priceB
   }) as Unit[]
   const heroImage = getMediaUrl(development.heroImage)
+  const heroImageFocalPosition = getFocalPosition(development.heroImage)
   const gallery = development.gallery?.map((i) => getMediaUrl(i.image))
   const getGalleryImage = (index: number) => gallery?.[index] || undefined
   const amenities = development.amenities || []
@@ -178,6 +191,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
               fill
               sizes="100vw"
               className="object-cover"
+              style={heroImageFocalPosition ? { objectPosition: heroImageFocalPosition } : undefined}
               priority
             />
           )}
