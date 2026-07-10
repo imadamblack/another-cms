@@ -1,7 +1,5 @@
 import React from 'react'
 import '@/styles/globals.scss'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
 import TrackingAnalytics from '@/components/trackingAnalytics'
 
 export const metadata = {
@@ -23,9 +21,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         />
       </head>
       <body className="bg-neutral-100 text-[#1a1814] font-sans font-light leading-relaxed overflow-x-hidden">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   )

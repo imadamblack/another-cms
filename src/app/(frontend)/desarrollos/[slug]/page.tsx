@@ -368,40 +368,82 @@ export default async function DevelopmentPage({ params }: PageProps) {
 
         <div className="w-full px-8 py-20">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">
                 Precio m<sup>2</sup>
               </p>
-              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto">
                 {formatCurrency(development.investmentSnapshot?.pricePerSqm)}
               </p>
               <p className="-ft-2 text-brand-4">Hoy en preventa</p>
             </div>
-            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">
                 Precio m<sup>2</sup> Mercado
               </p>
-              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
+              <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto">
                 {formatCurrency(development.investmentSnapshot?.marketPricePerSqm)}
               </p>
               <p className="-ft-2 text-brand-4">
                 Punto de comparación en {development.location?.neighborhood}
               </p>
             </div>
-            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
+            <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
-              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto gap-2 items-end">
+              <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto gap-2 items-end">
                 <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
                 {development.investmentSnapshot?.spread}%
               </p>
               <p className="-ft-2 text-brand-4">El descuento vs el mercado</p>
             </div>
-            <div className="flex flex-col gap-4 p-4 border border-brand-1 bg-neutral-800">
-              <p className="-ft-2 mono uppercase text-brand-4">Cap Rate</p>
-              <p className="flex ft-4 font-black text-brand-4 mb-8 ml-auto">
-                {development.investmentSnapshot?.capRateMid}%
+            <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
+              <p className="-ft-2 mono uppercase text-brand-4">
+                ROI a {development.investmentSnapshot?.deliveryMonths} meses
+              </p>
+              <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto gap-2 items-end">
+                <span className="material-icons text-brand-3">arrow_outward</span>
+                {development.investmentSnapshot?.projectedRoi}%
               </p>
               <p className="-ft-2 text-brand-4">Cuánto generas al año en rentas cortas.</p>
+            </div>
+
+            <div className="flex flex-col col-span-2 gap-4 p-6 border border-brand-2 bg-brand-2">
+              <p className="-ft-2 mono uppercase text-brand-4">
+                Plusvalía a {development.investmentSnapshot?.deliveryMonths} meses
+              </p>
+              <div className="flex flex-col items-end mb-8 ml-auto">
+                <p className="ft-6 font-black text-brand-4">
+                  {development.investmentSnapshot?.projectedAppreciationMid}%
+                </p>
+                <p className="-ft-1 font-medium text-brand-4">
+                  {'Rango proyectado de: '}
+                  {development.investmentSnapshot?.projectedAppreciationLow}
+                  {'% a '}
+                  {development.investmentSnapshot?.projectedAppreciationHigh}
+                  {'%'}
+                </p>
+              </div>
+              <p className="-ft-2 text-brand-4">
+                Cuánto se espera que suba el valor de la zona en lo que se entrega tu departamento.
+              </p>
+            </div>
+            <div className="flex flex-col col-span-2 gap-4 p-6 border border-brand-2 bg-brand-2">
+              <p className="-ft-2 mono uppercase text-brand-4">Cap Rate Rentas Cortas</p>
+              <div className="flex flex-col items-end mb-8 ml-auto">
+                <p className="ft-6 font-black text-brand-4">
+                  {development.investmentSnapshot?.capRateMid}%
+                </p>
+                <p className="-ft-1 font-medium text-brand-4">
+                  {'Rango proyectado de: '}
+                  {development.investmentSnapshot?.capRateLow}
+                  {'% a '}
+                  {development.investmentSnapshot?.capRateHigh}
+                  {'%'}
+                </p>
+              </div>
+              <p className="-ft-2 text-brand-4">
+                Cuánto te genera al año en renta de Airbnb, antes de gastos.
+              </p>
             </div>
           </div>
           <div className="-ft-3 mt-8">

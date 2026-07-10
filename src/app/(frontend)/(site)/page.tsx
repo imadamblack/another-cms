@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { getPayload } from 'payload'
 
-import config from '@/payload.config'
+import config from '@payload-config'
 import type { Development, Media } from '@/payload-types'
 import HomeLanding from '@/components/home-landing'
 
