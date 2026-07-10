@@ -6,6 +6,7 @@ import Image from 'next/image';
 import scrollDepth from '@/utils/scrollDepth';
 import OptInForm from '@/components/opt-in-form';
 import fbEvent from '@/services/fbEvents';
+import heroImg from '../../public/images/home/hero.jpg'
 
 function FaqItem({question, answer}) {
   const [open, setOpen] = useState(false);
@@ -235,9 +236,8 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
         <div className="grid grid-cols-1 md:grid-cols-3 items-end gap-8 py-12">
           <div className="col-span-2">
             <h1 className="ft-8 font-bold text-[#1a1814]">
-              La ZMG está saturada de preventas.
-              La mayoría no merece tu dinero.
-              Este es el portafolio de las que sí.
+              La ZMG está saturada de preventas. La mayoría no merece tu dinero. Este es el
+              portafolio de las que sí.
             </h1>
           </div>
 
@@ -248,8 +248,18 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
         </div>
 
         {/* Hero image */}
-        <div className="delay-1 relative w-full overflow-hidden" style={{height: 'clamp(280px, 50vw, 580px)'}}>
-          <Image src="/images/home/hero.jpg" alt="Interior" fill sizes="100vw" style={{objectFit: 'cover'}} priority/>
+        <div
+          className="delay-1 relative w-full overflow-hidden"
+          style={{ height: 'clamp(280px, 50vw, 580px)' }}
+        >
+          <Image
+            src={heroImg}
+            alt="Another"
+            fill
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+            priority
+          />
           <a
             href="#proyectos"
             onClick={() => setLastClick('hero')}
@@ -262,63 +272,79 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
 
       <section className="py-20">
         <div className="reading-container">
-          <h2>
-            La mayoría de los inversionistas toman decisiones con la mitad de la información
-          </h2>
+          <h2>La mayoría de los inversionistas toman decisiones con la mitad de la información</h2>
           <p>
-            Llevas semanas investigando desarrollos en preventa.<br/>
-            Has visto:<br/>
-            — renders impecables<br/>
-            — showrooms<br/>
-            — proyecciones de plusvalía que suenan muy bien<br/><br/>
-            El vendedor te dice que quedan pocas unidades.<br/>
-            Sientes que si no decides hoy, pierdes la oportunidad.<br/><br/>
-            Lo que nadie te está contando es esto:<br/>
-            <span className="ft-2 font-bold">Esa presión es su modelo de negocio. <br/>No es tu oportunidad, es la de ellos.</span><br/><br/>
-            El trabajo del agente es vender unidades.<br/><br/>
-            El incentivo del desarrollador es cerrar preventas para fondear la construcción.<br/><br/>
-            Ninguno de los dos tiene el mandato de revisar si ese proyecto es una buena inversión para ti.<br/>
+            Llevas semanas investigando desarrollos en preventa.
+            <br />
+            Has visto:
+            <br />
+            — renders impecables
+            <br />
+            — showrooms
+            <br />
+            — proyecciones de plusvalía que suenan muy bien
+            <br />
+            <br />
+            El vendedor te dice que quedan pocas unidades.
+            <br />
+            Sientes que si no decides hoy, pierdes la oportunidad.
+            <br />
+            <br />
+            Lo que nadie te está contando es esto:
+            <br />
+            <span className="ft-2 font-bold">
+              Esa presión es su modelo de negocio. <br />
+              No es tu oportunidad, es la de ellos.
+            </span>
+            <br />
+            <br />
+            El trabajo del agente es vender unidades.
+            <br />
+            <br />
+            El incentivo del desarrollador es cerrar preventas para fondear la construcción.
+            <br />
+            <br />
+            Ninguno de los dos tiene el mandato de revisar si ese proyecto es una buena inversión
+            para ti.
+            <br />
             Nosotros sí.
           </p>
-          <CTA
-            button="Contáctanos, da clic"
-            onClick={() => setLastClick('intro')}
-          />
+          <CTA button="Contáctanos, da clic" onClick={() => setLastClick('intro')} />
         </div>
       </section>
 
       <section className="w-full py-20 border-t border-neutral-300">
         <div className="container">
           <div className="reading-container">
-            <h2>Porque lo que determina si tu dinero está seguro no es el render, es la
-              estructura real detrás del proyecto</h2>
+            <h2>
+              Porque lo que determina si tu dinero está seguro no es el render, es la estructura
+              real detrás del proyecto
+            </h2>
           </div>
           {problemQuestions.map((row) => (
             <div
               key={row.title}
               className="group grid grid-cols-1 lg:grid-cols-[1fr_auto] items-center gap-10 py-7 border-t border-neutral-300 last:border-b last:border-neutral-300 cursor-default"
             >
-              <h3 className="ft-6 font-semibold">
-                {row.title}
-              </h3>
-              <p>
-                {row.desc}
-              </p>
+              <h3 className="ft-6 font-semibold">{row.title}</h3>
+              <p>{row.desc}</p>
             </div>
           ))}
         </div>
         <div className="reading-container">
           <p>
-            Casi nadie hace estas preguntas.<br/><br/>
-            Nosotros sí las hacemos, y si las respuestas no nos convencen, el proyecto no entra al portafolio.<br/><br/>
+            Casi nadie hace estas preguntas.
+            <br />
+            <br />
+            Nosotros sí las hacemos, y si las respuestas no nos convencen, el proyecto no entra al
+            portafolio.
+            <br />
+            <br />
             Así de simple.
           </p>
         </div>
         <div className="reading-container">
-          <CTA
-            button="Quieres saber más? Clic"
-            onClick={() => setLastClick('problemas')}
-          />
+          <CTA button="Quieres saber más? Clic" onClick={() => setLastClick('problemas')} />
         </div>
       </section>
 
@@ -326,10 +352,10 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
       <div className="grid grid-cols-1 bg-neutral-900">
         <div className="container grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-neutral-100 p-0">
           {[
-            {num: '+100', desc: `proyectos analizados\nen ${new Date().getFullYear()}`},
-            {num: '15', desc: 'pasaron nuestro\nfiltro de criterios'},
-            {num: '$0', desc: 'costo para el\ninversionista'},
-            {num: 'ZMG / TX', desc: 'mercados activos'},
+            { num: '+100', desc: `proyectos analizados\nen ${new Date().getFullYear()}` },
+            { num: '15', desc: 'pasaron nuestro\nfiltro de criterios' },
+            { num: '$0', desc: 'costo para el\ninversionista' },
+            { num: 'ZMG / TX', desc: 'mercados activos' },
           ].map((s) => (
             <div key={s.num} className="p-20 bg-neutral-900">
               <div className="ft-8 font-normal text-neutral-100 tracking-[-0.03em] leading-none mb-2.5">
@@ -347,9 +373,14 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
       <section id="criterios" className="w-full py-20 border-t border-neutral-300">
         <div className="container">
           <div className="reading-container mb-12">
-            <h2 className="font-bold">Revisamos, filtramos y omitimos desarrollos que no pasan la prueba</h2>
-            <p>De todos los proyectos que hemos analizado, menos de la mitad cumplieron nuestros criterios. <br/>
-              Los demás quedaron fuera, sin importar qué tan bien se veían en el showroom.</p>
+            <h2 className="font-bold">
+              Revisamos, filtramos y omitimos desarrollos que no pasan la prueba
+            </h2>
+            <p>
+              De todos los proyectos que hemos analizado, menos de la mitad cumplieron nuestros
+              criterios. <br />
+              Los demás quedaron fuera, sin importar qué tan bien se veían en el showroom.
+            </p>
             <p className="ft-2 font-semibold">¿Qué revisamos antes de mostrarte un proyecto?</p>
           </div>
 
@@ -366,10 +397,7 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
             ))}
           </div>
           <div className="reading-container">
-            <CTA
-              button="Agenda una cita"
-              onClick={() => setLastClick('criterios')}
-            />
+            <CTA button="Agenda una cita" onClick={() => setLastClick('criterios')} />
           </div>
         </div>
       </section>
@@ -377,8 +405,18 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
       {/* ── PROCESO ── */}
       <section id="proceso" className="w-full pt-20 px-8 border-t border-neutral-300">
         <div className="reading-container mb-12">
-          <h2 className="font-bold">Un proceso simple<br/>para inversionistas serios</h2>
-          <p>Sin presentaciones genéricas.<br/>Sin urgencia artificial.<br/>Sin rollo.</p>
+          <h2 className="font-bold">
+            Un proceso simple
+            <br />
+            para inversionistas serios
+          </h2>
+          <p>
+            Sin presentaciones genéricas.
+            <br />
+            Sin urgencia artificial.
+            <br />
+            Sin rollo.
+          </p>
         </div>
 
         <div className="container">
@@ -387,50 +425,47 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
               key={p.n}
               className="group grid grid-cols-[40px_1fr] md:grid-cols-[48px_1fr_1fr] items-start gap-0 py-8 border-t border-neutral-300 last:border-b last:border-neutral-300"
             >
-              <div className="text-[11px] font-normal text-[#8a8680] tracking-[0.1em] pt-0.5">{p.n}</div>
-              <h3
-                className="text-paso font-medium tracking-[-0.01em] leading-none text-[#1a1814] group-hover:opacity-50">
+              <div className="text-[11px] font-normal text-[#8a8680] tracking-[0.1em] pt-0.5">
+                {p.n}
+              </div>
+              <h3 className="text-paso font-medium tracking-[-0.01em] leading-none text-[#1a1814] group-hover:opacity-50">
                 {p.title}
               </h3>
-              <p
-                className="text-neutral-500 col-start-2 md:col-start-3 mt-2 md:mt-0">
-                {p.body}
-              </p>
+              <p className="text-neutral-500 col-start-2 md:col-start-3 mt-2 md:mt-0">{p.body}</p>
             </div>
           ))}
         </div>
         <div className="reading-container">
-          <CTA
-            button="Programa tu sesión, clic"
-            onClick={() => setLastClick('proceso')}
-          />
+          <CTA button="Programa tu sesión, clic" onClick={() => setLastClick('proceso')} />
         </div>
       </section>
 
       <section className="w-full bg-neutral-900 flex items-center mt-20 py-40 px-8">
         <div className="reading-container">
-          <h3
-            className="ft-8 font-semibold text-neutral-300">
+          <h3 className="ft-8 font-semibold text-neutral-300">
             Nuestro incentivo está alineado con el tuyo, no con el del desarrollador
           </h3>
           <p className="text-neutral-100 leading-[1.8]">
-            Nuestro servicio no tiene costo para el inversionista.<br/>
-            Tampoco damos exclusividad a desarrolladores para no ofrecerte una opción sesgada.<br/>
+            Nuestro servicio no tiene costo para el inversionista.
+            <br />
+            Tampoco damos exclusividad a desarrolladores para no ofrecerte una opción sesgada.
+            <br />
           </p>
         </div>
       </section>
 
       {/* ── PROYECTOS ── */}
       <section id="proyectos" className="w-full py-20 px-8 border-t border-neutral-300">
-
         <div className="reading-container mb-12">
-          <h2 className="font-bold">Estas son algunos de los proyectos que hoy cumplen nuestros criterios</h2>
+          <h2 className="font-bold">
+            Estas son algunos de los proyectos que hoy cumplen nuestros criterios
+          </h2>
           <p>Desarrollos en la Zona Metropolitana de Guadalajara y otros mercados estratégicos.</p>
         </div>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 md:container gap-8">
           {proyectos.map((p) => {
-            const href = p.slug ? `/desarrollos/${p.slug}` : null;
+            const href = p.slug ? `/desarrollos/${p.slug}` : null
             const card = (
               <>
                 <div className="relative w-full aspect-video">
@@ -439,38 +474,31 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
                     fill
                     alt={p.name}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    style={{objectFit: 'cover'}}
+                    style={{ objectFit: 'cover' }}
                   />
-                  {p.badge &&
-                    <div
-                      className="absolute top-8 right-8 bg-brand-2 px-6 py-1 ft-0 font-bold text-brand-4">{p.badge}</div>
-                  }
+                  {p.badge && (
+                    <div className="absolute top-8 right-8 bg-brand-2 px-6 py-1 ft-0 font-bold text-brand-4">
+                      {p.badge}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col pt-8">
-                  <div className="-ft-3 uppercase text-neutral-600">
-                    {p.zona}
-                  </div>
-                  <h3 className="ft-6 !my-0 font-semibold group-hover:opacity-50">
-                    {p.name}
-                  </h3>
-                  <p className="group-hover:opacity-50 pb-4">
-                    {p.desc}
-                  </p>
-                  <p className="font-semibold group-hover:opacity-50">
-                    → Desde {p.price}
-                  </p>
-                  <p className="font-semibold group-hover:opacity-50">
-                    → Entrega en {p.timeframe}
-                  </p>
+                  <div className="-ft-3 uppercase text-neutral-600">{p.zona}</div>
+                  <h3 className="ft-6 !my-0 font-semibold group-hover:opacity-50">{p.name}</h3>
+                  <p className="group-hover:opacity-50 pb-4">{p.desc}</p>
+                  <p className="font-semibold group-hover:opacity-50">→ Desde {p.price}</p>
+                  <p className="font-semibold group-hover:opacity-50">→ Entrega en {p.timeframe}</p>
                   <div className="flex gap-4 my-8">
-                    {(p.validators || DEFAULT_VALIDATORS).map(v => (
-                      <p key={v} className="py-1 px-2 border-2 -ft-3 font-medium tracking-wide">{v} ✓</p>
+                    {(p.validators || DEFAULT_VALIDATORS).map((v) => (
+                      <p key={v} className="py-1 px-2 border-2 -ft-3 font-medium tracking-wide">
+                        {v} ✓
+                      </p>
                     ))}
                   </div>
                 </div>
               </>
-            );
+            )
 
             return (
               <div
@@ -481,7 +509,9 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
                   <Link href={href} className="contents no-underline text-inherit">
                     {card}
                   </Link>
-                ) : card}
+                ) : (
+                  card
+                )}
                 {/* El CTA queda fuera del <Link> de la tarjeta: es un <a> propio
                     (va a #contact) y un <a> no puede anidarse dentro de otro <a>.
                     Anidarlos causaba el error de hidratación reportado. */}
@@ -493,31 +523,56 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
                   />
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </section>
 
       <section className="w-full py-20 border-y border-neutral-400 bg-neutral-800">
         <div className="reading-container">
-          <h2 className="font-bold text-neutral-50">Partners con quienes hemos validado proyectos</h2>
+          <h2 className="font-bold text-neutral-50">
+            Partners con quienes hemos validado proyectos
+          </h2>
         </div>
         <div className="container grid grid-cols-2 lg:grid-cols-4 gap-40 py-20">
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/lopx.png" fill alt="Lopx" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
+            <Image
+              src="/images/home/logos/lopx.png"
+              fill
+              alt="Lopx"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              style={{ objectFit: 'contain' }}
+            />
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/dala.png" fill alt="Dala" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
+            <Image
+              src="/images/home/logos/dala.avif"
+              fill
+              alt="Dala"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              style={{ objectFit: 'contain' }}
+            />
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/dezka.svg" fill alt="Dezka" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
+            <Image
+              src="/images/home/logos/dezka.svg"
+              fill
+              alt="Dezka"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              style={{ objectFit: 'contain' }}
+            />
           </div>
           <div className="relative w-full aspect-video overflow-hidden">
-            <Image src="/images/home/logos/ccu.png" fill alt="CompraCasasUSA" sizes="(max-width: 1024px) 50vw, 25vw" style={{objectFit: 'contain'}}/>
+            <Image
+              src="/images/home/logos/ccu.webp"
+              fill
+              alt="CompraCasasUSA"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              style={{ objectFit: 'contain' }}
+            />
           </div>
         </div>
       </section>
-
 
       {/* --- TESTIMONIOS --- */}
       <section className="w-full py-20 border-t border-neutral-300">
@@ -526,24 +581,14 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
         </div>
         <div className="container grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonios.map((t, i) => (
-            <div
-              className="bg-[#edeae3] p-8 flex flex-col"
-              key={i}
-            >
-              <p className="mb-8 flex-grow">
-                {t.message}
-              </p>
-              <p className="-ft-1 mt-auto font-semibold text-right">
-                — {t.nombre}
-              </p>
+            <div className="bg-[#edeae3] p-8 flex flex-col" key={i}>
+              <p className="mb-8 flex-grow">{t.message}</p>
+              <p className="-ft-1 mt-auto font-semibold text-right">— {t.nombre}</p>
             </div>
           ))}
         </div>
         <div className="reading-container">
-          <CTA
-            button="Dale clic, platiquemos"
-            onClick={() => setLastClick('testimonios')}
-          />
+          <CTA button="Dale clic, platiquemos" onClick={() => setLastClick('testimonios')} />
         </div>
       </section>
 
@@ -555,7 +600,7 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
 
         <div className="container">
           {faqs.map((f) => (
-            <FaqItem key={f.question} question={f.question} answer={f.answer}/>
+            <FaqItem key={f.question} question={f.question} answer={f.answer} />
           ))}
         </div>
       </section>
@@ -564,18 +609,21 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
       <section id="contact" className="w-full py-20">
         <div className="reading-container">
           <h2 className="font-bold">
-            Programa una sesión para explorar los proyectos inmobiliarios disponibles para tu perfil, sin
-            costo.
+            Programa una sesión para explorar los proyectos inmobiliarios disponibles para tu
+            perfil, sin costo.
           </h2>
           <p className="">
-            Ayúdanos con tus datos y a responder un par de preguntas para programar tu sesión de exploración.
-            <br/><br/>
-            No te vamos a presionar.<br/>
+            Ayúdanos con tus datos y a responder un par de preguntas para programar tu sesión de
+            exploración.
+            <br />
+            <br />
+            No te vamos a presionar.
+            <br />
             Si no hay algo para ti hoy, te lo decimos en los primeros minutos.
           </p>
           <OptInForm lastClick={lastClick} />
         </div>
       </section>
     </>
-  );
+  )
 }

@@ -47,11 +47,6 @@ async function getFeaturedDevelopments(): Promise<DevelopmentWithHomeCard[]> {
     collection: 'developments',
     depth: 1,
     limit: 8,
-    // 'id' como desempate: homeSortOrder tiene defaultValue=0, así que varios
-    // desarrollos pueden empatar. Sin un segundo criterio, Postgres no
-    // garantiza el mismo orden entre ejecuciones y eso rompía la hidratación
-    // en el home (el orden de las tarjetas cambiaba entre el HTML del server
-    // y el árbol del cliente).
     sort: ['homeSortOrder', 'id'],
     where: {
       and: [
