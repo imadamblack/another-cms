@@ -7,6 +7,7 @@ import config from '@/payload.config'
 import type { Amenity, Development, Media, Unit } from '@/payload-types'
 
 import OptInForm from '@/components/opt-in-form'
+import UnitsSwiper from '@/components/units-swiper'
 
 type PageProps = {
   params: Promise<{
@@ -20,22 +21,6 @@ const getMediaUrl = (media?: number | Media | null) => {
   }
 
   return media.url || undefined
-}
-
-const formatArea = (value?: number | null) => {
-  if (!value) {
-    return null
-  }
-
-  return `${value.toLocaleString('es-MX')} m²`
-}
-
-const formatRooms = (value?: number | null, singular = 'recámara', plural = 'recámaras') => {
-  if (!value) {
-    return null
-  }
-
-  return `${value} ${value === 1 ? singular : plural}`
 }
 
 function formatCurrency(value: string | number | null | undefined): string {
@@ -169,7 +154,12 @@ export default async function DevelopmentPage({ params }: PageProps) {
   }
 
   const development = result.development as Development
-  const units = result.units as Unit[]
+  const units = result.units.sort((a, b) => {
+    const priceA = a.pricing?.price ?? Infinity
+    const priceB = b.pricing?.price ?? Infinity
+
+    return priceA - priceB
+  }) as Unit[]
   const heroImage = getMediaUrl(development.heroImage)
   const gallery = development.gallery?.map((i) => getMediaUrl(i.image))
   const getGalleryImage = (index: number) => gallery?.[index] || undefined
@@ -276,7 +266,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
               return (
                 <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={item.id}>
                   <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
-                    <h3 className="ft-6 font-bold">{amenity.name}</h3>
+                    <h3 className="ft-3 font-bold">{amenity.name}</h3>
                     {amenity.description && <p>{amenity.description}</p>}
                   </div>
 
@@ -307,52 +297,8 @@ export default async function DevelopmentPage({ params }: PageProps) {
         />
 
         {units.length ? (
-          <div className="w-full px-8 py-20 grid md:grid-cols-2 gap-8">
-            {units.map((unit) => {
-              const image = getMediaUrl(unit.floorPlan)
-              const soldOut = unit.status === 'soldOut'
-              const totalArea = formatArea(unit.attributes?.totalArea)
-              const bedrooms = formatRooms(unit.attributes?.bedrooms)
-              const bathrooms = formatRooms(unit.attributes?.bathrooms, 'baño', 'baños')
-              const parking = formatRooms(
-                unit.attributes?.parkingSpaces,
-                'estacionamiento',
-                'estacionamientos',
-              )
-
-              return (
-                <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={unit.id}>
-                  <div className="flex flex-col gap-4 py-8 justify-end border-y border-neutral-800">
-                    {soldOut && (
-                      <div className="absolute right-0 bottom-0 ft-0 bg-brand-2 w-max px-4 py-2 font-bold text-brand-4 z-10">
-                        SOLD OUT
-                      </div>
-                    )}
-                    <h3 className="ft-6 font-bold">{unit.name}</h3>
-                    <p>{unit.pricing?.priceLabel}</p>
-                    <div className="-ft-2 mono uppercase text-neutral-600">
-                      {totalArea && <span>{totalArea} | </span>}
-                      {bedrooms && <span>{bedrooms} | </span>}
-                      {bathrooms && <span>{bathrooms} | </span>}
-                      {parking && <span>{parking} | </span>}
-                      {unit.attributes?.hasTerrace && <span>Terraza</span>}
-                    </div>
-                  </div>
-
-                  <div className="relative col-span-2 p-4 w-full aspect-square md:aspect-[4/3] overflow-hidden">
-                    {image && (
-                      <Image
-                        alt={unit.name}
-                        src={image}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-center object-contain"
-                      />
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+          <div className="w-full py-20">
+            <UnitsSwiper units={units} />
           </div>
         ) : (
           <div className="reading-container px-8 py-20 flex flex-col gap-4 justify-center items-center">
@@ -381,7 +327,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
               return (
                 <div className="relative grid grid-cols-1 lg:grid-cols-3 lg:gap-8" key={pm.id}>
                   <div className="flex flex-col py-8 justify-end border-y border-neutral-800">
-                    <h3 className="ft-6 font-bold">{pm.name}</h3>
+                    <h3 className="ft-3 font-bold">{pm.name}</h3>
                     {discount !== 0 && (
                       <div className="ft-0 text-brand-2 font-bold">Descuento del {discount}%</div>
                     )}
