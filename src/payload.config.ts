@@ -27,6 +27,15 @@ export default buildConfig({
         Icon: '/components/Favicon#Favicon',
       },
     },
+    meta: {
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/favicon.png',
+        },
+      ],
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
