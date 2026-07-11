@@ -1,20 +1,77 @@
-import { getCookie } from 'cookies-next';
+function parseCookieValue(raw) {
+  if (!raw) return null;
 
-// NOTA: archivo generado (no incluido en los archivos compartidos). Lee los
-// parámetros UTM de la URL y las cookies estándar de Meta Pixel (_fbc/_fbp)
-// para acompañar los eventos de conversión y el webhook de opt-in.
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  try {
+    const clean = raw.startsWith('j%3A') ? raw.slice(4) : raw;
+    return JSON.parse(decodeURIComponent(clean));
+  } catch {
+    return decodeURIComponent(raw);
+  }
+}
+
+function getCookieFromDocument(name) {
+  if (typeof document === 'undefined') return undefined;
+
+  const entry = document.cookie
+    .split('; ')
+    .find((c) => c.startsWith(`${name}=`));
+
+  return entry?.split('=').slice(1).join('=');
+}
+
+function getQueryValue(searchParams, key) {
+  if (!searchParams) return null;
+
+  if (typeof searchParams.get === 'function') {
+    return searchParams.get(key);
+  }
+
+  const value = searchParams[key];
+
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value ?? null;
+}
 
 export default function getTrackingData(searchParams) {
-  const utm = {};
+  const utmCookie = parseCookieValue(getCookieFromDocument('utm'));
+  const lead = parseCookieValue(getCookieFromDocument('lead'));
+  const fbc = parseCookieValue(getCookieFromDocument('_fbc'));
+  const fbp = parseCookieValue(getCookieFromDocument('_fbp'));
 
-  UTM_KEYS.forEach((key) => {
-    const value = searchParams?.get?.(key);
-    if (value) utm[key] = value;
-  });
+  const utmFromQuery = {};
+  const utmKeys = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content',
+  ];
 
-  const fbc = getCookie('_fbc') ?? '';
-  const fbp = getCookie('_fbp') ?? '';
+  for (const key of utmKeys) {
+    const value = getQueryValue(searchParams, key);
+    if (value) utmFromQuery[key] = value;
+  }
 
-  return { utm, fbc, fbp };
+  const utm =
+    Object.keys(utmFromQuery).length > 0
+      ? utmFromQuery
+      : utmCookie ?? null;
+
+  const id = getQueryValue(searchParams, 'id') ?? lead?.id ?? null;
+
+  return {
+    shouldRedirect: !id || id === 'undefined' || id === '',
+    lead: {
+      id,
+      fullName: lead?.fullName ?? '',
+      email: lead?.email ?? '',
+      phone: lead?.phone ?? '',
+      whatsapp: lead?.whatsapp ?? '',
+      sheetRow: lead?.sheetRow ?? '',
+      lastClick: lead?.lastClick ?? '',
+    },
+    utm,
+    fbc,
+    fbp,
+  };
 }
