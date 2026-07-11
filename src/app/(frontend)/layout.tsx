@@ -13,7 +13,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata = {
-  title: 'Another Real Estate Agency',
+  title: 'Another® Real Estate Agency',
   description: 'Agencia boutique de inversión inmobiliaria en preventa',
   icons: {
     icon: '/favicon.png',
@@ -28,6 +28,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`scroll-pt-[6rem] ${ibmPlexMono.variable}`}>
       <head>
+        {/* ~98% del tráfico llega de Ads (FB/IG): adelanta el DNS/TLS del Pixel */}
+        <link rel="preconnect" href="https://connect.facebook.net" crossOrigin="anonymous" />
         <TrackingAnalytics />
 
         <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />

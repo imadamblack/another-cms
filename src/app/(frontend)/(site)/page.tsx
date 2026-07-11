@@ -1,7 +1,12 @@
-import { Suspense } from 'react'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+
+// Sin esto, cada visita (98% viene de Ads, casi siempre una sesión nueva)
+// dispara una consulta fresca a la base de datos antes de poder generar el
+// HTML. Con revalidate, Next sirve la página desde caché y solo vuelve a
+// consultar Payload en segundo plano cada 5 minutos, no en cada request.
+export const revalidate = 300
 import type { Development, Media } from '@/payload-types'
 import HomeLanding from '@/components/home-landing'
 
@@ -84,9 +89,5 @@ export default async function HomePage() {
     img: getMediaUrl(d.heroImage),
   }))
 
-  return (
-    <Suspense fallback={null}>
-      <HomeLanding proyectos={proyectos} />
-    </Suspense>
-  )
+  return <HomeLanding proyectos={proyectos} />
 }

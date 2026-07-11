@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
         hostname: '*.public.blob.vercel-storage.com',
       },
     ],
+    // Las URLs de Blob son inmutables (cada subida genera un nombre con hash
+    // nuevo), así que podemos cachear las variantes ya optimizadas por mucho
+    // tiempo en vez del default corto. Esto evita que Vercel tenga que volver
+    // a decodificar/reescalar/recomprimir la misma imagen para cada visitante
+    // nuevo, que es buena parte de la demora que se siente en la primera carga.
+    minimumCacheTTL: 31536000, // 1 año
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

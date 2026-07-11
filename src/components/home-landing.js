@@ -1,12 +1,25 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import scrollDepth from '@/utils/scrollDepth';
 import OptInForm from '@/components/opt-in-form';
 import fbEvent from '@/services/fbEvents';
 import heroImg from '../../public/images/home/hero.jpg'
+
+// Skeleton del formulario: mismo alto/espaciado que OptInForm, para que no
+// haya salto de layout mientras se resuelve el boundary de abajo.
+function OptInFormFallback() {
+  return (
+    <div className="flex flex-col w-full mt-0 space-y-4" aria-hidden="true">
+      <div className="h-[3.2rem] bg-neutral-200 animate-pulse" />
+      <div className="h-[3.2rem] bg-neutral-200 animate-pulse" />
+      <div className="h-[3.2rem] bg-neutral-200 animate-pulse" />
+      <div className="h-[3.2rem] bg-neutral-300 animate-pulse" />
+    </div>
+  )
+}
 
 function FaqItem({question, answer}) {
   const [open, setOpen] = useState(false);
@@ -621,7 +634,9 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
             <br />
             Si no hay algo para ti hoy, te lo decimos en los primeros minutos.
           </p>
-          <OptInForm lastClick={lastClick} />
+          <Suspense fallback={<OptInFormFallback />}>
+            <OptInForm lastClick={lastClick} />
+          </Suspense>
         </div>
       </section>
     </>
