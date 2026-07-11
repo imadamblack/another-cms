@@ -251,7 +251,7 @@ export const Developments: CollectionConfig = {
                     const high = siblingData?.projectedAppreciationHigh
 
                     if (typeof low === 'number' && typeof high === 'number') {
-                      return (low + high) / 2
+                      return Math.round(((low + high) / 2) * 100) / 100
                     }
 
                     return null
@@ -286,7 +286,7 @@ export const Developments: CollectionConfig = {
                     const high = siblingData?.capRateHigh
 
                     if (typeof low === 'number' && typeof high === 'number') {
-                      return (low + high) / 2
+                      return Math.round(((low + high) / 2) * 100) / 100
                     }
 
                     return null
@@ -321,7 +321,7 @@ export const Developments: CollectionConfig = {
                     const high = siblingData?.equityAtDeliveryHigh
 
                     if (typeof low === 'number' && typeof high === 'number') {
-                      return (low + high) / 2
+                      return Math.round(((low + high) / 2) * 100) / 100
                     }
 
                     return null
