@@ -14,9 +14,9 @@ export default function fbEvent(
   try {
     if (typeof fbq !== 'undefined') {
       if (isStandard) {
-        fbq('track', eventName, clientData);
+        fbq('track', eventName, clientData, { eventID: String(eventID) });
       } else {
-        fbq('trackCustom', eventName, clientData);
+        fbq('trackCustom', eventName, clientData, { eventID: String(eventID) });
       }
     }
   } catch (err) {
