@@ -478,7 +478,7 @@ export default function HomeLanding({ proyectos: proyectosProp }) {
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 md:container gap-8">
           {proyectos.map((p) => {
-            const href = p.slug ? `/desarrollos/${p.slug}` : null
+            const href = p.slug ? `/listings/${p.slug}` : null
             const card = (
               <>
                 <div className="relative w-full aspect-video">

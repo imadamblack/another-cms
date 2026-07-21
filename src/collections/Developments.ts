@@ -8,7 +8,7 @@ export const Developments: CollectionConfig = {
     defaultColumns: ['name', 'status', 'featuredOnHome', 'updatedAt'],
     useAsTitle: 'name',
     livePreview: {
-      url: ({ data }) => `/desarrollos/${data.slug}`,
+      url: ({ data }) => `/listings/${data.slug}`,
     },
   },
   access: {

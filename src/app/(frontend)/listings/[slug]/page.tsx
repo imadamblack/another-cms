@@ -476,7 +476,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
       <section id="contact" className="w-full py-20 border-t border-brand-1">
         <div className="reading-container">
           <h2 className="font-bold">
-            Programa una sesión para explorar tu inversión en <span>{development.name}</span>, sin
+            Programa una sesión para explorar tu inversión en {development.name}, sin
             costo.
           </h2>
           <p className="">
