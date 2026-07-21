@@ -8,6 +8,7 @@ import type { Amenity, Development, Media, Unit } from '@/payload-types'
 
 import OptInForm from '@/components/opt-in-form'
 import UnitsSwiper from '@/components/units-swiper'
+import ScrollDepthTracker from '@/components/scroll-depth-tracker'
 
 type PageProps = {
   params: Promise<{
@@ -181,6 +182,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
 
   return (
     <>
+      <ScrollDepthTracker />
       {/* HERO */}
       <section className="relative px-8 w-full flex flex-col items-center">
         <div className="relative my-8 flex aspect-square w-full sm:aspect-[2/1] 2xl:aspect-[3/1] overflow-hidden border border-neutral-200 bg-neutral-200">

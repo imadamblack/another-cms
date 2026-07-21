@@ -1,5 +1,6 @@
-// NOTA: archivo generado (no incluido en los archivos compartidos). Dispara
-// `callback(value)` una sola vez por cada porcentaje de scroll alcanzado.
+/**
+ * @param {{ values?: number[], callback?: (value: number) => void }} [options]
+ */
 export default function scrollDepth({ values = [25, 50, 75, 100], callback = () => {} } = {}) {
   if (typeof window === 'undefined') return () => {};
 
