@@ -10,7 +10,7 @@ import { restrictNumber, emailRegExp } from '@/utils/formValidators';
 import fbEvent from '@/services/fbEvents';
 import getTrackingData from '@/services/tracking-cookies';
 
-export default function OptInForm({development = '', lastClick = ''}) {
+export default function OptInForm({listing = '', lastClick = ''}) {
   const [sending, setSending] = useState(false);
   const router = useRouter();
   const {
@@ -25,7 +25,7 @@ export default function OptInForm({development = '', lastClick = ''}) {
 
   const onSubmit = async (data) => {
     data.whatsapp = '521' + data.phone.replace(/^\+?((MX)?\s?(52)?)?\s?0?1?|\s|\(|\)|-/g, '');
-    data.development = development;
+    data.listing = listing;
     data.lastClick = lastClick;
 
     try {

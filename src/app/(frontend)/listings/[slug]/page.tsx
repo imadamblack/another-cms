@@ -191,7 +191,9 @@ export default async function DevelopmentPage({ params }: PageProps) {
               fill
               sizes="100vw"
               className="object-cover"
-              style={heroImageFocalPosition ? { objectPosition: heroImageFocalPosition } : undefined}
+              style={
+                heroImageFocalPosition ? { objectPosition: heroImageFocalPosition } : undefined
+              }
               priority
             />
           )}
@@ -476,8 +478,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
       <section id="contact" className="w-full py-20 border-t border-brand-1">
         <div className="reading-container">
           <h2 className="font-bold">
-            Programa una sesión para explorar tu inversión en {development.name}, sin
-            costo.
+            Programa una sesión para explorar tu inversión en {development.name}, sin costo.
           </h2>
           <p className="">
             Ayúdanos con tus datos y a responder un par de preguntas para programar una cita.
@@ -485,7 +486,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
             <br />
             Incluso podemos explorar otros proyectos afines a tu perfil de inversionista.
           </p>
-          <OptInForm />
+          <OptInForm listing={development.name} />
         </div>
       </section>
     </>
