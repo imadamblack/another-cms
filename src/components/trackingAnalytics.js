@@ -1,8 +1,10 @@
+import Script from 'next/script'
+
 export default function TrackingAnalytics() {
   return (
     <>
       <meta name="facebook-domain-verification" content={process.env.FB_DOMAIN_VERIFICATION} />
-      <script dangerouslySetInnerHTML={{__html: `
+      <Script id="fb-pixel" strategy="afterInteractive" dangerouslySetInnerHTML={{__html: `
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};

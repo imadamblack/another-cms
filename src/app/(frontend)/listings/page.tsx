@@ -89,7 +89,7 @@ export default async function DesarrollosPage() {
 
             const card = (
               <>
-                <div className="relative flex w-full aspect-video bg-brand-5">
+                <div className="relative flex w-full aspect-video bg-neutral-400">
                   <Image
                     src={p.img || FALLBACK_PROJECT_IMAGE}
                     fill
