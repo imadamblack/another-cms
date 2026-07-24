@@ -70,6 +70,7 @@ export default function getTrackingData(searchParams) {
       sheetRow: lead?.sheetRow ?? '',
       lastClick: lead?.lastClick ?? '',
       listing: lead?.listing ?? '',
+      listingUrl: lead?.listingUrl ?? '',
     },
     utm,
     fbc,

@@ -27,6 +27,7 @@ export default function OptInForm({listing = '', lastClick = ''}) {
     data.whatsapp = '521' + data.phone.replace(/^\+?((MX)?\s?(52)?)?\s?0?1?|\s|\(|\)|-/g, '');
     data.listing = listing;
     data.lastClick = lastClick;
+    data.listingUrl = typeof window !== 'undefined' ? window.location.href : '';
 
     try {
       setSending(true);
