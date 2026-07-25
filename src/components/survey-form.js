@@ -1,6 +1,6 @@
 'use client';
 import { useForm, FormProvider } from 'react-hook-form';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { setCookie } from 'cookies-next';
 import { useSearchParams, useRouter } from 'next/navigation';
 import StepRenderer from '@/components/stepRenderer';
@@ -75,7 +75,7 @@ const formSteps = [
       {value: 'chapultepec', label: 'Chapultepec'},
       // {value: 'ciudad-granja', label: 'Ciudad Granja'},
       // {value: 'country', label: 'El Country'},
-      // {value: 'expo', label: 'Expo Guadalajara'},
+      {value: 'expo', label: 'Expo Guadalajara'},
       // {value: 'la-perla', label: 'La Perla',},
       {value: 'zona-real', label: 'Zona Real'},
       // {value: 'punto-sur', label: 'Punto Sur',},
@@ -97,20 +97,6 @@ const formSteps = [
     ],
     cols: 1,
   },
-  // {
-  //   type: 'radio',
-  //   name: 'downPayment',
-  //   title: '¿Qué porcentaje de enganche podrías comprometer hoy?',
-  //   description: 'Los desarrollos en portafolio piden entre 10% y 30% del valor total',
-  //   inputOptions: { required: 'Selecciona una por favor' },
-  //   options: [
-  //     { value: '30_mas', label: '30% o más, sin problema' },
-  //     { value: '20_30', label: 'Entre 20% y 30%' },
-  //     { value: '10_20', label: 'Entre 10% y 20%' },
-  //     { value: 'menos_10', label: 'Menos del 10% por ahora' },
-  //   ],
-  //   cols: 1,
-  // },
   // {
   //   type: 'radio',
   //   name: 'deposit',
@@ -157,6 +143,7 @@ export default function SurveyForm() {
   const [formStep, setFormStep] = useState(0);
   const [inputError, setInputError] = useState(null);
   const [sending, setSending] = useState(false);
+  const isSubmittingRef = useRef(false);
   const methods = useForm({mode: 'all'});
   const {
     register,
@@ -223,6 +210,8 @@ export default function SurveyForm() {
   };
 
   const onSubmit = async (data) => {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
     setSending(true);
     try {
       const payload = {...lead, ...data, utm};
@@ -255,6 +244,7 @@ export default function SurveyForm() {
       await router.push('/thankyou');
     } finally {
       setSending(false);
+      isSubmittingRef.current = false;
     }
   };
 
@@ -316,6 +306,7 @@ export default function SurveyForm() {
                           disabled={sending}
                           onClick={() => {
                             if (formStep === lastInputIndex) {
+                              if (isSubmittingRef.current) return;
                               handleSubmit(onSubmit)();
                             } else {
                               handleNext();
