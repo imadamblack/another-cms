@@ -263,7 +263,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
       </section>
 
       {/* AMENIDADES */}
-      {amenities.length && (
+      {amenities.length ? (
         <section>
           <Blockbuster
             title="Amenidades"
@@ -304,6 +304,8 @@ export default async function DevelopmentPage({ params }: PageProps) {
             })}
           </div>
         </section>
+      ) : (
+        <></>
       )}
 
       {/* UNIDADES */}
