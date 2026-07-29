@@ -310,6 +310,7 @@ export interface Development {
    * Ej. Providencia | Guadalajara
    */
   tagline?: string | null;
+  furnished?: boolean | null;
   /**
    * Muestra este desarrollo en la sección "Proyectos" de la home.
    */
@@ -658,6 +659,7 @@ export interface DevelopmentsSelect<T extends boolean = true> {
   status?: T;
   description?: T;
   tagline?: T;
+  furnished?: T;
   featuredOnHome?: T;
   homeSortOrder?: T;
   homeBadge?: T;

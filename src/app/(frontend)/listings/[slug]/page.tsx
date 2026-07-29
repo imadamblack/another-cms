@@ -179,6 +179,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
   const getGalleryImage = (index: number) => gallery?.[index] || undefined
   const amenities = development.amenities || []
   const paymentPlans = development.paymentPlans || []
+  const furnished = development.furnished;
 
   return (
     <>
@@ -391,6 +392,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
             <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">
                 Precio m<sup>2</sup>
+                {furnished && ' Amueblado'}
               </p>
               <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto">
                 {formatCurrency(development.investmentSnapshot?.pricePerSqm)}
@@ -399,7 +401,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
             </div>
             <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">
-                Precio m<sup>2</sup> Mercado
+                Precio m<sup>2</sup> Mercado{furnished && ' Amueblado'}
               </p>
               <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto">
                 {formatCurrency(development.investmentSnapshot?.marketPricePerSqm)}
@@ -411,7 +413,13 @@ export default async function DevelopmentPage({ params }: PageProps) {
             <div className="flex flex-col gap-4 p-6 border border-brand-1 bg-neutral-800">
               <p className="-ft-2 mono uppercase text-brand-4">Spread</p>
               <p className="flex ft-6 font-black text-brand-4 mb-8 ml-auto gap-2 items-end">
-                <span className="material-icons text-brand-3 rotate-90">arrow_outward</span>
+                {(development.investmentSnapshot?.spread ?? 0) > 0 ? (
+                  <span className="material-icons text-brand-3 rotate-90">arrow_upward</span>
+                ) : (development.investmentSnapshot?.spread ?? 0) < 0 ? (
+                  <span className="material-icons text-brand-2">arrow_downward</span>
+                ) : (
+                  <span className="material-icons text-brand-4">horizontal_rule</span>
+                )}
                 {development.investmentSnapshot?.spread}%
               </p>
               <p className="-ft-2 text-brand-4">El descuento vs el mercado</p>
@@ -424,7 +432,7 @@ export default async function DevelopmentPage({ params }: PageProps) {
                 <span className="material-icons text-brand-3">arrow_outward</span>
                 {development.investmentSnapshot?.projectedRoi}%
               </p>
-              <p className="-ft-2 text-brand-4">Cuánto generas al año en rentas cortas.</p>
+              <p className="-ft-2 text-brand-4">Cuánto más vale tu capital al recibir tu depa</p>
             </div>
 
             <div className="flex flex-col col-span-2 gap-4 p-6 border border-brand-2 bg-brand-2">

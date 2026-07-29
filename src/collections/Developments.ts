@@ -1,6 +1,36 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 import { slugField } from '@/fields/slug'
+
+// La página /listings/[slug] no usa `fetch`, así que Next no la detecta como
+// dinámica y la sirve desde el Full Route Cache indefinidamente después del
+// primer request. Sin esto, el preview interno de Payload (que solo recarga
+// el iframe) sigue mostrando la versión cacheada aunque el "save" haya
+// funcionado.
+const revalidateDevelopment: CollectionAfterChangeHook = ({ doc, previousDoc }) => {
+  if (doc.slug) {
+    revalidatePath(`/listings/${doc.slug}`)
+  }
+
+  if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+    revalidatePath(`/listings/${previousDoc.slug}`)
+  }
+
+  revalidatePath('/listings')
+
+  return doc
+}
+
+const revalidateDevelopmentDelete: CollectionAfterDeleteHook = ({ doc }) => {
+  if (doc?.slug) {
+    revalidatePath(`/listings/${doc.slug}`)
+  }
+
+  revalidatePath('/listings')
+
+  return doc
+}
 
 export const Developments: CollectionConfig = {
   slug: 'developments',
@@ -13,6 +43,10 @@ export const Developments: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateDevelopment],
+    afterDelete: [revalidateDevelopmentDelete],
   },
   fields: [
     {
@@ -63,6 +97,12 @@ export const Developments: CollectionConfig = {
       admin: {
         description: 'Ej. Providencia | Guadalajara',
       },
+    },
+    {
+      name: 'furnished',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Se entrega amueblado',
     },
     {
       type: 'collapsible',

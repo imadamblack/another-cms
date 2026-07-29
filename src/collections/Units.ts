@@ -1,6 +1,55 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 import { slugField } from '@/fields/slug'
+
+// Las unidades se muestran dentro de /listings/[slug] del desarrollo padre.
+// Esa página se cachea (Full Route Cache) y no se invalida sola, así que sin
+// esto el preview del desarrollo no refleja cambios hechos en sus unidades.
+const revalidateParentDevelopment = async (
+  developmentRelation: unknown,
+  req: Parameters<CollectionAfterChangeHook>[0]['req'],
+) => {
+  let developmentId: number | string | undefined
+
+  if (typeof developmentRelation === 'number' || typeof developmentRelation === 'string') {
+    developmentId = developmentRelation
+  } else if (
+    typeof developmentRelation === 'object' &&
+    developmentRelation !== null &&
+    'id' in developmentRelation
+  ) {
+    developmentId = (developmentRelation as { id: number | string }).id
+  }
+
+  if (!developmentId) return
+
+  const development = await req.payload.findByID({
+    collection: 'developments',
+    id: developmentId,
+    depth: 0,
+  })
+
+  if (development?.slug) {
+    revalidatePath(`/listings/${development.slug}`)
+  }
+}
+
+const revalidateUnit: CollectionAfterChangeHook = async ({ doc, previousDoc, req }) => {
+  await revalidateParentDevelopment(doc.development, req)
+
+  if (previousDoc?.development && previousDoc.development !== doc.development) {
+    await revalidateParentDevelopment(previousDoc.development, req)
+  }
+
+  return doc
+}
+
+const revalidateUnitDelete: CollectionAfterDeleteHook = async ({ doc, req }) => {
+  await revalidateParentDevelopment(doc?.development, req)
+
+  return doc
+}
 
 export const Units: CollectionConfig = {
   slug: 'units',
@@ -10,6 +59,10 @@ export const Units: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateUnit],
+    afterDelete: [revalidateUnitDelete],
   },
   fields: [
     {
